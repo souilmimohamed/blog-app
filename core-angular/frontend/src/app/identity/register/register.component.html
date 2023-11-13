@@ -1,0 +1,73 @@
+<div class="login-container">
+  <div class="login-content">
+    <mat-toolbar class="login-toolbar" color="primary">REGISTER</mat-toolbar>
+    <mat-card>
+      <form [formGroup]="registerForm" (ngSubmit)="register()">
+        <mat-form-field>
+          <mat-icon matPrefix>email</mat-icon>
+          <input
+            matInput
+            type="email"
+            placeholder="email"
+            formControlName="Email"
+          />
+          <mat-error *ngIf="checkValidation('Email')">{{
+            emailErrors()
+          }}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-icon matPrefix>person_outline</mat-icon>
+          <input
+            matInput
+            type="text"
+            placeholder="fullname"
+            formControlName="Name"
+          />
+          <mat-error *ngIf="checkValidation('Name')">{{
+            fieldRequired
+          }}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-icon matPrefix>person</mat-icon>
+          <input
+            matInput
+            type="text"
+            placeholder="username"
+            formControlName="Username"
+          />
+          <mat-error *ngIf="checkValidation('Username')">{{
+            usernameError()
+          }}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-icon matPrefix>lock_outline</mat-icon>
+          <input
+            type="password"
+            autocomplete="false"
+            matInput
+            placeholder="Password"
+            formControlName="Password"
+          />
+          <mat-hint
+            >Password should be at least 6 caraters long, contains at least one
+            Uppercase, one digit and one symbol</mat-hint
+          >
+          <mat-error *ngIf="checkValidation('Password')">
+            {{ getErrorPassword() }}
+          </mat-error>
+        </mat-form-field>
+        <div class="socialMediaFlex">
+          <button
+            style="width: 100%"
+            [disabled]="registerForm.invalid"
+            type="submit"
+            mat-raised-button
+            color="primary"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+    </mat-card>
+  </div>
+</div>

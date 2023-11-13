@@ -1,0 +1,40 @@
+<ng-container *ngIf="blog">
+  <div class="container mt-4">
+    <mat-toolbar color="primary" class="title-tool-bar"
+      >#{{ blog.Title }}</mat-toolbar
+    >
+    <mat-card>
+      <div class="d-flex flex-column">
+        <img src="{{ blog.HeaderImageUrl }}" alt="no image" />
+        <button mat-icon-button color="primary">
+          {{ blog.Publisher }}
+          <mat-icon>person_pin_circle</mat-icon>
+        </button>
+        <label>{{ blog.Description }}</label>
+        <mat-divider [inset]="true"></mat-divider>
+        <mat-form-field>
+          <textarea
+            matInput
+            value="{{ blog.Body }}"
+            rows="20"
+            readonly
+          ></textarea>
+        </mat-form-field>
+      </div>
+      <mat-hint>
+        <mat-icon>date_range</mat-icon>
+        {{ blog.CreatedAt | date : "long" }}
+      </mat-hint>
+      <button
+        class="float-right"
+        mat-raised-button
+        color="primary"
+        matBadge="{{ blog.Likes }}"
+        matBadgePosition="after"
+        (click)="likeBlog()"
+      >
+        <mat-icon>thumb_up</mat-icon>
+      </button>
+    </mat-card>
+  </div>
+</ng-container>

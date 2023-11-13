@@ -1,0 +1,71 @@
+<div class="container mt-4">
+  <mat-card>
+    <mat-toolbar color="primary" class="title-toolbar">NEW BLOG</mat-toolbar>
+    <mat-card-content class="container mt-4">
+      <div class="position-relative">
+        <img src="{{ imageUrl }}" alt="No image" />
+        <button
+          mat-icon-button
+          class="edit-button"
+          color="primary"
+          (click)="onClick()"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
+      <form (ngSubmit)="PostBlog()" [formGroup]="blogForm">
+        <mat-form-field class="col-6">
+          <input
+            type="text"
+            matInput
+            placeholder="Title"
+            formControlName="Title"
+          />
+          <mat-error *ngIf="checkValidation('Title')">
+            {{ fieldRequired }}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="col-6">
+          <input
+            type="text"
+            matInput
+            placeholder="Description"
+            formControlName="Description"
+          />
+          <mat-error *ngIf="checkValidation('Description')">
+            {{ fieldRequired }}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="col-12">
+          <textarea
+            placeholder="Body"
+            matInput
+            rows="20"
+            formControlName="Body"
+          >
+          </textarea>
+          <mat-error *ngIf="checkValidation('Body')">
+            {{ fieldRequired }}
+          </mat-error>
+        </mat-form-field>
+        <button
+          mat-raised-button
+          type="submit"
+          color="primary"
+          [disabled]="blogForm.invalid || imageFile === null"
+        >
+          Post
+        </button>
+      </form>
+      <input
+        type="file"
+        #fileUpload
+        id="fileUpload"
+        name="fileUpload"
+        accept="image/*"
+        style="display: none"
+        (change)="readFile($event)"
+      />
+    </mat-card-content>
+  </mat-card>
+</div>

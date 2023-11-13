@@ -1,0 +1,81 @@
+<form [formGroup]="form" (ngSubmit)="post()">
+  <div>
+    <mat-card class="container">
+      <div style="width: 80%">
+        <mat-card>
+          <mat-card-content>
+            <img
+              *ngIf="form.get('headerImage')?.value"
+              src="{{ origin }}/api/blogs/image/{{
+                form.get('headerImage')?.value
+              }}"
+            />
+            <ul>
+              <li>
+                <mat-progress-bar [value]="file.progress"></mat-progress-bar>
+              </li>
+            </ul>
+            <mat-card-actions>
+              <button mat-button color="warn" (click)="onClick()" type="button">
+                <mat-icon>cloud_upload</mat-icon>&nbsp;
+                <small>Uplad Image</small>
+              </button>
+            </mat-card-actions>
+          </mat-card-content>
+        </mat-card>
+        <input
+          type="file"
+          #fileUpload
+          id="fileUpload"
+          name="fileUpload"
+          accept="image/*"
+          style="display: none"
+        />
+      </div>
+      <div class="container" style="width: 80%">
+        <mat-form-field>
+          <input type="text" placeholder="#Id" matInput formControlName="id" />
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            type="text"
+            placeholder="Title"
+            matInput
+            formControlName="title"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            type="text"
+            placeholder="Description"
+            matInput
+            formControlName="description"
+          />
+        </mat-form-field>
+        <div style="display: flex; width: 100%">
+          <mat-form-field style="width: 45%">
+            <textarea
+              matInput
+              rows="15"
+              placeholder="enter Markdown ..."
+              class="variable-textarea"
+              formControlName="body"
+            ></textarea>
+          </mat-form-field>
+          <markdown
+            [data]="form.get('body')?.value"
+            class="variable-binding"
+          ></markdown>
+        </div>
+      </div>
+      <button
+        mat-flat-button
+        color="primary"
+        [disabled]="form.invalid"
+        type="submit"
+      >
+        POST
+      </button>
+    </mat-card>
+  </div>
+</form>

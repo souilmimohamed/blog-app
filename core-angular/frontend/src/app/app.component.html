@@ -1,0 +1,23 @@
+<mat-toolbar color="primary">
+  <a mat-icon-button class="example-icon" routerLink="/">
+    <mat-icon>home</mat-icon>
+  </a>
+  <span>Blog App</span>
+  <span class="example-spacer"></span>
+  <ng-container *ngIf="!(loggedIn$ | async); else section">
+    <a mat-button routerLink="/users/login">Login</a>
+    <a mat-button routerLink="/users/register">Register</a>
+  </ng-container>
+</mat-toolbar>
+<ng-template #section>
+  <a mat-button>Publishers</a>
+  <a mat-button routerLink="blogs">Blogs</a>
+  <span matPrefix style="font-size: 16px">{{ username$ | async }}</span>
+  <mat-select style="width: 2rem">
+    <mat-option><mat-icon>person</mat-icon>Profile</mat-option>
+    <mat-option (click)="logout()"
+      ><mat-icon>exit_to_app</mat-icon>Logout</mat-option
+    >
+  </mat-select>
+</ng-template>
+<router-outlet></router-outlet>

@@ -1,0 +1,6 @@
+<h1 style="margin-top: 15px">All Blog Entries</h1>
+<app-blog-entries
+  [blogEntries]="blogEntries$ | async"
+  (paginate)="onPaginateChange($event)"
+>
+</app-blog-entries>

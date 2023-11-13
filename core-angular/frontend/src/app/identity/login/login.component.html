@@ -1,0 +1,45 @@
+<div class="login-container">
+  <div class="login-content">
+    <mat-toolbar class="login-toolbar" color="primary">LOGIN</mat-toolbar>
+    <mat-card>
+      <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <mat-form-field>
+          <mat-icon matPrefix>email</mat-icon>
+          <input
+            matInput
+            type="email"
+            placeholder="email"
+            formControlName="Email"
+          />
+          <mat-error *ngIf="checkValidation('Email')">{{
+            emailErrors()
+          }}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-icon matPrefix>lock_outline</mat-icon>
+          <input
+            type="password"
+            autocomplete="false"
+            matInput
+            placeholder="Password"
+            formControlName="Password"
+          />
+          <mat-error *ngIf="checkValidation('Password')">
+            {{ fieldRequired }}
+          </mat-error>
+        </mat-form-field>
+        <div class="socialMediaFlex">
+          <button
+            style="width: 100%"
+            [disabled]="loginForm.invalid"
+            type="submit"
+            mat-raised-button
+            color="primary"
+          >
+            Login
+          </button>
+        </div>
+      </form>
+    </mat-card>
+  </div>
+</div>

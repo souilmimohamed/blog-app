@@ -1,0 +1,65 @@
+<h1>Register Page</h1>
+
+<form [formGroup]="registerFrom" (ngSubmit)="onSubmit()">
+  <div class="container">
+    <mat-form-field>
+      <input matInput placeholder="Name" formControlName="name" />
+      <mat-hint *ngIf="registerFrom.get('name')?.errors"
+        >Fullname is requied</mat-hint
+      >
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Username" formControlName="username" />
+      <mat-hint *ngIf="registerFrom.get('username')?.errors"
+        >Username is requied</mat-hint
+      >
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Email" formControlName="email" />
+      <mat-hint *ngIf="registerFrom.get('email')?.errors"
+        >Email is requied</mat-hint
+      >
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Password"
+        formControlName="password"
+        type="password"
+      />
+      <mat-hint *ngIf="registerFrom.get('password')?.errors"
+        >Password is requied</mat-hint
+      >
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Confirm Password"
+        formControlName="passwordConfirm"
+        type="password"
+      />
+      <mat-hint *ngIf="registerFrom.hasError('passwordNotMatch')"
+        >Passwords not matching</mat-hint
+      >
+    </mat-form-field>
+    <button
+      mat-flat-button
+      color="primary"
+      [disabled]="registerFrom.invalid"
+      type="submit"
+    >
+      Register
+    </button>
+  </div>
+</form>
+
+<h3 *ngIf="registerFrom.invalid">From Contains folowwing errors:</h3>
+<small
+  *ngIf="registerFrom.get('password')?.hasError('passwordInvalid')"
+  style="color: red"
+>
+  Password not does not contain a number.</small
+><br />
+<small *ngIf="registerFrom.hasError('passwordNotMatch')" style="color: red">
+  Passwords Not Matching
+</small>

@@ -1,0 +1,13 @@
+<strong mat-dialog-title class="text-danger">
+  <mat-icon>error</mat-icon> ERROR</strong
+>
+<div mat-card-content>
+  <ul>
+    <li *ngFor="let error of errors">
+      <p>{{ error }}</p>
+    </li>
+  </ul>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="close()">OK</button>
+</div>
