@@ -8,6 +8,46 @@
     <mat-icon>note_add</mat-icon>
     New blog
   </a>
+  <div class="row ml-1 mt-4">
+    <mat-form-field class="example-full-width">
+      <mat-label>Search by text</mat-label>
+      <input matInput placeholder="filter..." [(ngModel)]="searchText" />
+      <button
+        mat-button
+        *ngIf="searchText"
+        matSuffix
+        mat-icon-button
+        aria-label="Clear"
+        (click)="searchText = ''; $event.stopPropagation()"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field class="ml-4">
+      <mat-label>Publishers</mat-label>
+      <mat-select [(ngModel)]="selectPublisher">
+        <mat-option
+          *ngFor="let publisher of publishers"
+          [value]="publisher.Value"
+          >{{ publisher.Value }}</mat-option
+        >
+      </mat-select>
+      <button
+        mat-button
+        *ngIf="selectPublisher"
+        matSuffix
+        mat-icon-button
+        aria-label="Clear"
+        (click)="selectPublisher = ''; $event.stopPropagation()"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <button mat-mini-fab color="primary" class="ml-4 mt-2" (click)="search()">
+      <mat-icon>search</mat-icon>
+    </button>
+  </div>
   <mat-toolbar class="title-tool-bar" color="primary">BLOGS</mat-toolbar>
   <table mat-table [dataSource]="(blogs$ | async)?.blogs!">
     <ng-container matColumnDef="Title">

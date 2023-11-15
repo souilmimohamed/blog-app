@@ -1,5 +1,6 @@
 using API.Extensions;
 using Infrastructure.Data;
+using Infrastructure.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 
@@ -38,4 +39,17 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+//seeding
+using var scope = app.Services.CreateScope();
+var services=scope.ServiceProvider;
+var context = services.GetRequiredService<DataContext>();
+try
+{
+    await context.Database.MigrateAsync();
+    await Seed.SeedData(context);
+}
+catch (Exception e)
+{
+	throw e;
+}
 app.Run();

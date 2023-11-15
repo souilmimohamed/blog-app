@@ -21,7 +21,17 @@ namespace Infrastructure.Data.Repos
         {
             var query = _context.Users
             .Include(u => u.ProfileImage).AsQueryable();
-            return _mapper.Map<IEnumerable<UserDto>>(await query.ToListAsync());
+            var users= _mapper.Map<IEnumerable<UserDto>>(await query.ToListAsync());
+            foreach (var user in users)
+            {
+                var blogsQuery=_context.Blogs
+                    .Include(b => b.Publisher)
+               .Include(b => b.HeaderImage)
+               .Where(b => b.Publisher.Id == user.Id).AsQueryable();
+
+                user.Blogs=_mapper.Map<IEnumerable<BlogDto>>(await blogsQuery.ToListAsync());
+            }
+            return users;
         }
 
         public async Task<User> GetUserByEmail(string email)

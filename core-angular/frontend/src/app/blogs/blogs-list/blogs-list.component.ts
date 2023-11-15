@@ -4,6 +4,10 @@ import { selectBlogs } from '../store/blog.selector';
 import { filter } from '../models/blog.model';
 import { InvokeBlogAPI } from '../store/blog.action';
 import { PageEvent } from '@angular/material/paginator';
+import { IdentityService } from 'src/app/identity/services/identity.service';
+import { take } from 'rxjs/operators';
+import { KeyValuePair } from 'src/app/shared/models/commom.model';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'app-blogs-list',
@@ -28,16 +32,45 @@ export class BlogsListComponent implements OnInit {
     'Likes',
     'Actions',
   ];
-  constructor(private store: Store) {}
+  publishers: KeyValuePair<string, string>[] = [];
+  searchText: string = '';
+  selectPublisher: string = '';
+  constructor(private store: Store, private identityService: IdentityService) {}
 
   ngOnInit(): void {
     this.store.dispatch(InvokeBlogAPI({ filter: this.filter }));
+    this.loadPublishers();
   }
   getPage(event: PageEvent) {
     console.log(event);
     this.filter = {
       ...this.filter,
       PageNumber: event.pageIndex === 0 ? 1 : event.pageIndex + 1,
+    };
+    this.store.dispatch(InvokeBlogAPI({ filter: this.filter }));
+  }
+  loadPublishers() {
+    this.identityService
+      .getAllUsers()
+      .pipe(take(1))
+      .subscribe((result) => {
+        if (result.Success) {
+          this.publishers = result.Body.map((user) => {
+            return {
+              Key: user.Username,
+              Value: user.Name,
+            };
+          });
+        }
+      });
+  }
+
+  search() {
+    this.filter = {
+      ...this.filter,
+      SearchText: this.searchText,
+      Publisher: this.selectPublisher,
+      PageNumber: 1,
     };
     this.store.dispatch(InvokeBlogAPI({ filter: this.filter }));
   }

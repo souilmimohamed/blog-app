@@ -4,6 +4,7 @@ import {
   LoginDto,
   LoginResponseDto,
   RegisterUserDto,
+  UserDto,
 } from '../models/identity.model';
 import { environment } from 'src/environments/environment';
 import { HttpResponseModel } from 'src/app/shared/models/httpResponseModel';
@@ -31,5 +32,11 @@ export class IdentityService {
   }
   logout(): Observable<boolean> {
     return of(true);
+  }
+
+  getAllUsers() {
+    return this.http.get<HttpResponseModel<UserDto[]>>(
+      `${environment.ApiUrl}${this.MODULE}GetAllUsers`
+    );
   }
 }

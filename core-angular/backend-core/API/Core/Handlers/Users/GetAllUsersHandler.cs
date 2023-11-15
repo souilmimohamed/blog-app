@@ -22,7 +22,6 @@ namespace Core.Handlers.Users
                 return validationResponse;
 
             var response = await _unitOfWork.UserRepository.GetAllUsers();
-
             return ResponseModel<IEnumerable<UserDto>>.SuccessResponse(response);
         }
         public async Task<ResponseModel<IEnumerable<UserDto>>> ValidateAsync()

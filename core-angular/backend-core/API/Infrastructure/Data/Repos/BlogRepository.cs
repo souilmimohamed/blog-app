@@ -5,6 +5,7 @@ using Infrastructure.DTOs;
 using Infrastructure.Helpers;
 using Infrastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Infrastructure.Data.Repos
 {
@@ -65,6 +66,16 @@ namespace Infrastructure.Data.Repos
                 .FirstOrDefaultAsync(b => b.Id == id);
             return _mapper.Map<BlogDto>(blog);
         }
+
+        public async Task<IEnumerable<BlogDto>> GetBlogByUser(int userId)
+        {
+            var query = _context.Blogs
+               .Include(b => b.Publisher)
+               .Include(b => b.HeaderImage)
+               .Where(b => b.Publisher.Id == userId).AsQueryable();
+            return _mapper.Map<IEnumerable<BlogDto>>(await query.ToListAsync());
+        }
+
         public async Task<int> LikeBlog(int blogId)
         {
             var blog = await _context.Blogs.FindAsync(blogId);
